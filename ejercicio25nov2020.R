@@ -5,8 +5,11 @@
 #4.- ¿Qué te indica anti_join(vuelos, aeropuertos, by = c("destino" = "codigo_aeropuerto"))?
 #4.- ¿Qué te indica anti_join(aeropuertos, vuelos, by = c("codigo_aeropuerto" = "destino"))?
 
+library(dplyr)
 library(datos)
+library(ggplot2)
 
+vuelos
 #pregunta 1
 grupo <- group_by(vuelos, vuelo)
 conteo <- count(grupo, vuelo)
@@ -15,12 +18,31 @@ filtrar <- filter(conteo, (n < 100))
 #pregunta 2
 str(vehiculos)
 comunes
-comunes <- inner_join(vehiculos,comunes, by = 'fabricante')
-comunes <- vehiculos %>% inner_join(comunes)
+comunes <- inner_join(vehiculos,comunes, by = c('fabricante','modelo'))
+##comunes <- vehiculos %>% inner_join(comunes)
 
 #pregunta 3
 atraso <- summarise(group_by(vuelos,vuelo),sum(atraso_salida))
 cruzada <- full_join(vuelos,clima)
+## respuesta
+summary(vuelos$atraso_salida)
+filter(vuelos,atraso_salida >= 12.64)
+atrasados = arrange(vuelos,-atraso_salida, -atraso_llegada)
+clima
+atrasados48 = atrasados[1:48,]
+vuelos_clima <- atrasados48 %>%
+  left_join(clima)%>%
+  select(anio,mes,dia,origen,hora,fecha_hora,atraso_salida, atraso_llegada,temperatura,punto_rocio, 
+         humedad, direccion_viento,velocidad_viento, velocidad_rafaga, precipitacion, visibilidad, presion)
+
+ggplot(vuelos_clima,aes(x=atraso_llegada, y=visibilidad))+
+  geom_point()
+
+ggplot(vuelos_clima,aes(x=atraso_salida, y=visibilidad))+
+  geom_point()
+
+ggplot(vuelos_clima,aes(x=atraso_salida, y=temperatura))+
+  geom_point()
 
 #pregunta 4
 vuelos
