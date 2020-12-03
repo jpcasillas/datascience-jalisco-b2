@@ -152,8 +152,9 @@ dev.off()
 # 1) Indica en el argumento index la columna de donde obtendrás los valores a graficar
 # 2) Indicar en vColor la columna de donde se obtendrán los valores para los colores
 # 3) Cambia a una paleta de azules
+tempo$label <- paste(tempo$nom_ent,tempo$porcentaje, sep = ", ")
 png(paste(dir2, "10.png", sep="/"), width=12, height=12, units="in", res=300)
-treemap(tempo, index="____", vSize="porcentaje", vColor="____", type="value", title="Porcentaje desaperecidos por entidad - 2011", palette="____", title.legend="", border.col="grey", border.lwd=0.5)
+treemap(tempo, index=c("label"), vSize="porcentaje", vColor="porcentaje", type="value", title="Porcentaje desaperecidos por entidad - 2011", palette="Blues", title.legend="", border.col="grey", border.lwd=0.5)
 dev.off()
 
 ###########
@@ -171,7 +172,7 @@ gr <- ggplot(tempo, aes(x=total, y=tdes)) +
   labs(title="Total de desaparecidos vs Tasa de desaparecidos",
        x="Total de desaparecidos", y="Tasa de desaparecidos") +
   theme_bw()
-ggsave(paste(dir2, "11.png", sep="/"), plot=gr, width = 12, height = 12)
+ggsave(paste(dir2, "11.png", sep="/"), plot=gr, width = 20, height = 12)
 
 # Líneas de tendencia
 #1 linea recta
@@ -182,7 +183,7 @@ gr <- ggplot(tempo, aes(x=total, y=tdes)) +
   labs(title="Total de desaparecidos vs Tasa de desaparecidos",
        x="Total de desaparecidos", y="Tasa de desaparecidos") +
   theme_bw()
-ggsave(paste(dir2, "12.png", sep="/"), plot=gr, width = 12, height = 12)
+ggsave(paste(dir2, "12.png", sep="/"), plot=gr, width = 20, height = 12)
 
 #2 escalas
 gr <- ggplot(tempo, aes(x=total, y=tdes)) +
@@ -193,7 +194,7 @@ gr <- ggplot(tempo, aes(x=total, y=tdes)) +
        x="Total de desaparecidos", y="Tasa de desaparecidos") +
   theme_bw() +
   scale_x_log10() + scale_y_log10()
-ggsave(paste(dir2, "13.png", sep="/"),plot=gr, width=12, height = 12)
+ggsave(paste(dir2, "13.png", sep="/"),plot=gr, width=20, height = 12)
 
 
 ##########
@@ -212,7 +213,7 @@ gr <- ggplot(tempo, aes(x=year, y=tdes, color=sexo)) +
        x="Año", y="Tasa de desaparecidos", color="Sexo") +
   theme_bw() +
   scale_colour_manual(values = c("Hombre" = "red", "Mujer" = "blue"))
-ggsave(paste(dir2, "15.png", sep="/"), plot=gr, width=12, height = 12)
+ggsave(paste(dir2, "15.png", sep="/"), plot=gr, width=20, height = 12)
 
 ########
 # Area #
@@ -234,7 +235,7 @@ gr <- ggplot(tempo, aes(x=year, y=porcentaje, fill=sexo)) +
   labs(title="Porcentaje de desaparecidos por sexo \n 2010-2015",
        x="Año", y="% de desaparecidos", fill="Sexo") +
   theme_bw()
-ggsave(paste(dir2, "16.png", sep="/"), plot=gr, width=12, height = 12)
+ggsave(paste(dir2, "16.png", sep="/"), plot=gr, width=20, height = 12)
 
 # que tal % por estado por año?
 tempo <- data %>%
@@ -250,7 +251,7 @@ gr <- ggplot(tempo, aes(x=year, y=porcentaje, fill=nom_ent)) +
   labs(title="Porcentaje de desaparecidos por entidad \n 2010-2015",
        x="Año", y="% de desaparecidos", fill="Entidad") +
   theme_bw()
-ggsave(paste(dir2, "17.png", sep="/"), plot=gr, width = 12, height = 12)
+ggsave(paste(dir2, "17.png", sep="/"), plot=gr, width = 20, height = 12)
 
 ############
 # Boxplots #
@@ -264,7 +265,7 @@ gr <- ggplot(tempo, aes(x=nom_ent, y=tdes)) +
   labs(title="Distribucion tasa de desaparecidos por estado", x="Entidad", y="Tasa de desaparecidos") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90))
-ggsave(paste(dir2, "18.png", sep="/"), plot=gr, width=12, height = 12)
+ggsave(paste(dir2, "18.png", sep="/"), plot=gr, width=20, height = 12)
 
 
 tempo$year <- as.character(tempo$year)
@@ -274,4 +275,4 @@ gr <- ggplot(tempo, aes(x=year, y=tdes, fill=year)) +
   theme_bw() +
   theme(axis.text.x = element_blank(),
         legend.position = "bottom")
-ggsave(paste(dir2, "19.png", sep="/"), plot=gr, width=12, height = 12)
+ggsave(paste(dir2, "19.png", sep="/"), plot=gr, width=20, height = 12)

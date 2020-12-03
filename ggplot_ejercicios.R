@@ -1,3 +1,15 @@
+# 1) Importar todos los paquetes necesarios
+library(tidyverse)
+library(treemap)
+
+# 2) Establecer los directorios
+dir1 <- "/home/rstudio/datascience-jalisco-b2/databases" # Base de datos
+# dir1 <- "~/nombre_repo/databases" # Base de datos (Solo Docker)
+dir2 <- "/home/rstudio/datascience-jalisco-b2/Graphs" # Gráficas
+# dir2 <- "~/nombre_repo/graficas" # Gráficas (Solo Docker)
+
+data <- read_csv(paste(dir1, "rnped_limpia.csv", sep="/"))
+
 # PREGUNTA 2: Entre hombres y mujeres, ¿cuál fue el grupo más vulnerable en el 2011?
 ## Preparación:
 # 1) Filtrar a únicamente los registros del año 2011
@@ -58,14 +70,15 @@ ggsave(paste(dir2, "3.png", sep="/"), plot=gr, width=12, height=12)
 tempo <- data %>%
   group_by(sexo, ent, nom_ent) %>%
   summarise(tdes = weighted.mean(tdes, pob)) %>%
-  mutate(tdes = round(tdes, 2))
+  mutate(tdes = round(tdes, 2)) %>%
+  arrange(tdes)
 # Encontrar la función faltante que permita visualizar las tasas para cada sexo por separado, pero sin perder
 # la división existente entre estados.
 # Pro Tip: Consulta la sección "faceting" del cheat sheet.
 gr <- ggplot(tempo, aes(x=sexo, y=tdes)) +
   geom_bar(stat="identity", fill="#41b6c4") +
   geom_text(aes(label=tdes), vjust=-0.3, size=3) +
-  facet_grid(sexo~tdes) +
+  facet_grid(sexo~nom_ent) +
   labs(title="Tasa de desaparecidos por sexo y estado \n2010 - 2015", 
        x="Sexo", y="Tasa de desaparecidos") +
   theme_bw() +
