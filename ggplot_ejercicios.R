@@ -71,18 +71,23 @@ tempo <- data %>%
   group_by(sexo, ent, nom_ent) %>%
   summarise(tdes = weighted.mean(tdes, pob)) %>%
   mutate(tdes = round(tdes, 2)) %>%
+  group_by(sexo)%>%
   arrange(tdes)
+
+levels <- tempo %>% filter(sexo =="Mujer")
+tempo$nom_ent <- factor(tempo$nom_ent, levels = levels$nom_ent)
+
 # Encontrar la función faltante que permita visualizar las tasas para cada sexo por separado, pero sin perder
 # la división existente entre estados.
 # Pro Tip: Consulta la sección "faceting" del cheat sheet.
 gr <- ggplot(tempo, aes(x=sexo, y=tdes)) +
   geom_bar(stat="identity", fill="#41b6c4") +
   geom_text(aes(label=tdes), vjust=-0.3, size=3) +
-  facet_grid(sexo~nom_ent) +
+  facet_grid(~nom_ent) +
   labs(title="Tasa de desaparecidos por sexo y estado \n2010 - 2015", 
        x="Sexo", y="Tasa de desaparecidos") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle=100)) # Elige un ángulo que permita visualizar correctamente el texto
+  theme(axis.text.x = element_text(angle=90)) # Elige un ángulo que permita visualizar correctamente el texto
 
 ggsave(paste(dir2, "6.png", sep="/"), plot=gr, width=20, height=12)
 

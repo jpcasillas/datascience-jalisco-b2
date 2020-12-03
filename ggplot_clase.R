@@ -121,9 +121,10 @@ tempo <- data %>%
   group_by(sexo, rango_edad) %>%
   summarise(tdes = weighted.mean(tdes, pob))
 
+breaks <- round(c(min(tempo$tdes),2,4,6,max(tempo$tdes)),3)
 gr <- ggplot(tempo, aes(x=sexo, y=rango_edad, fill=tdes)) +
   geom_tile(color="black") +
-  scale_fill_continuous(low="#ffeda0", high="#f03b20") +
+  scale_fill_continuous(low="#ffeda0", high="#f03b20", breaks=breaks) +
   labs(title="Tasa de desaparecidos promedio \n2010-2015", 
        x="Sexo", y="Edad", fill="Tasa de desaparecidos") +
   coord_fixed() +
