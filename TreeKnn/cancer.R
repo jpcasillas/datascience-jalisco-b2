@@ -26,7 +26,7 @@ curve(-x * log2(x) - (1 - x) * log2(1 - x), col = "red", xlab = "x", ylab = "Ent
 #Leer datos
 #Base de datos de Wisconsin Breast Cancer Diagnostic
 #569 muestras, 
-dir1 <- "/home/krax7/ClasesDevf/IDS/7-DecisionTrees"
+dir1 <- "/home/rstudio/datascience-jalisco-b2"
 # "/home/krax7/ClasesDevf/IDS/DecisionTrees/wisc_bc_data.csv"
 
 wbcd <- read.csv(paste(dir1, "wisc_bc_data.csv", sep="/"), stringsAsFactors = FALSE)
@@ -53,8 +53,9 @@ round(prop.table(table(wbcd$diagnosis)) * 100, digits = 1)
 
 ## Entrenamiento
 # separamos la DB en un set como entrenamiento y otro como prueba
-nfilas <- nrow(wbcd_n) * .80
-index <- sample(1:nrow(wbcd_n), nfilas) # 80%
+nfilas <- nrow(wbcd) * .80
+set.seed(123)
+index <- sample(1:nrow(wbcd), nfilas) # 80%
 wbcd_train <- wbcd[index, -1] # Obtener solo las muestras
 wbcd_test <- wbcd[-index, -1] # Todo menos las muestras
 
@@ -62,8 +63,8 @@ wbcd_train_labels <- wbcd[index, 1]
 wbcd_test_labels <- wbcd[-index, 1]
 
 # Guardamos la clasificación de cada uno (B o M) de la primera columna
-wbcd_train_labels <- wbcd[1:nfilas, 1]
-wbcd_test_labels <- wbcd[(nfilas+1):nfilas, 1]
+#wbcd_train_labels <- wbcd[1:nfilas, 1]
+#wbcd_test_labels <- wbcd[(nfilas+1):nfilas, 1]
 str(wbcd_train_labels)
 
 # Generando el modelo
