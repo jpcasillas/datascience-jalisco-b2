@@ -9,18 +9,21 @@ setwd("~")
 # install.packages(c("fpc", 'cluster'))
 library('fpc')
 library('cluster')
-dir1 <- '/home/krax7/ClasesDevf/IDS/7-k-means-b'
+dir1 <- '/home/rstudio/datascience-jalisco-b2/kmeans'
 
 ## Leer los datos
-## Tenemos una muestra (30,000) de perfiles de estudiantes de secundaria en una red social en el 2006
+# Tenemos una muestra (30,000) de perfiles de estudiantes de secundaria en una 
+# red social en el 2006
 # Se contabilizaron las palabras en todos los perfiles
-# Del top de palabras más frecuentes se seleccionaron 36 de las cuales podrían indicar 5 categorías de interés
+# Del top de palabras más frecuentes se seleccionaron 36 de las cuales podrían indicar
+# 5 categorías de interés
 # 1) actividades extracurriculares
 # 2) fashion
 # 3) religion
 # 4) romance
 # 5) comportamiento anti-social
-# se tiene la edad, el género, el año de graduación (representando el año en el que se ha de graduar el estudiante), y la cantidad de amigos
+# se tiene la edad, el género, el año de graduación (representando el año en el que se
+# ha de graduar el estudiante), y la cantidad de amigos
 #----
 teens <- read.csv(paste(dir1,"snsdata.csv", sep="/"))
 str(teens)

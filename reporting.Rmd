@@ -1,0 +1,27 @@
+---
+title: "Klustera"
+author: "Jean Poul Casillas Anduiza"
+date: "10/12/2020"
+output: pdf_document
+---
+
+```{r setup, echo=FALSE}
+library(datos)
+library(ggplot2)
+library(dplyr)
+
+pequenios <- diamantes %>%
+  filter(quilate <= 2.5)
+```
+
+Tenemos datos respecto de `r nrow(diamantes)` diamantes. Únicamente 
+`r nrow(diamantes) - nrow(pequenios)` son mayores a 2,5 quilates. 
+La distribución de los diamantes pequeños se muestra a continuación:
+
+```{r, echo=FALSE}
+pequenios %>%
+  ggplot(aes(quilate)) +
+  geom_freqpoly(binwidth = 0.01)
+```
+
+
